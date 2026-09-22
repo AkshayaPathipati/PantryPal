@@ -32,10 +32,12 @@ jobs:
 
       - name: Install frontend dependencies
         working-directory: client
-        run: npm ci
+        run: |
+          npm install --package-lock-only
+          npm ci
 
       - name: Build frontend
-        working-directory: client
+        working-directory: ./client
         run: npm run build
 
       - name: Configure GitHub Pages
