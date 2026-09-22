@@ -1,7 +1,7 @@
 name: Deploy React app to GitHub Pages
 
 on:
-  push:
+  pull_request: #again
     branches:
       - main
   workflow_dispatch:
@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out repository
@@ -26,16 +26,18 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
-          node-version: 22 #26.9.0 #22
+          node-version: 22 #26.9.0
           cache: npm
           cache-dependency-path: client/package-lock.json
 
       - name: Install frontend dependencies
         working-directory: client
-        run: npm ci
+        run: |
+          npm install --package-lock-only
+          npm ci
 
       - name: Build frontend
-        working-directory: client
+        working-directory: ./client
         run: npm run build
 
       - name: Configure GitHub Pages
