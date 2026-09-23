@@ -49,12 +49,12 @@ function Upload() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
-    const handleSubmit = async (e: Event) => { //FormEvent deprecated
+    const handleSubmit = async (e: Event) => { //FormEvent deprecated; ChangeEvent supposedly doesn't work. Event does though
         e.preventDefault();
         try {
             //await is a keyword to pause the execution of the fuction til the server responds
             //fetch is the built-in browser tool used to make HTTP requests to the server
-            const response = await fetch('https://pantrypal-sbeo.onrender.com/api/recipes', { //http://localhost:5000/api/recipes
+            const response = await fetch('http://localhost:5000/api/recipes', { //https://pantrypal-sbeo.onrender.com/api/recipes
                 //look up this line, if required, implement api/auth/register and handle the request
 
                 // is the endpoint we are sending the request to
@@ -98,7 +98,7 @@ function Upload() {
                 <button type="submit" className="btn btn-primary">Submit Recipe :D</button>
             </div>
         </form>
-    );
+    ); //there are errors here but somehow it builds and deploys
 }
 
 export default Upload;

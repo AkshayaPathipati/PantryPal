@@ -55,11 +55,11 @@ const Recipe = mongoose.model("Recipe", recipeSchema);
 
 app.get("/api/recipes", async (req, res) => {
   try {
-    const recipes = await Recipe.find().sort({ createdAt: -1 });
+    const recipes = await Recipe.find({});
 
-    res.json({
-      recipes,
-    });
+    //res.json({ recipes, }); //lol what does this do
+
+    res.send({ recipes, }).status(200);
   } catch (error) {
     console.error("Failed to retrieve recipes:", error);
 
@@ -77,7 +77,7 @@ app.post("/api/recipes", async (req, res) => {
             recipeName,
         });
 
-        // let collection = db.collection("records");
+        // let collection = db.collection("records"); //what is db?
         // let result = await collection.insertOne(recipe);
 
         return res.status(201).json({

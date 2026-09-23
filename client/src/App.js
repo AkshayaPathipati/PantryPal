@@ -9,13 +9,13 @@ function App() {
   const [backendData, setBackendData] = useState([{}])
 
   useEffect(() => {
-    fetch("https://pantrypal-sbeo.onrender.com/api/recipes").then( //http://localhost:5000/api/recipes
+    fetch("http://localhost:5000/api/recipes").then( //https://pantrypal-sbeo.onrender.com/api/recipes
       response => response.json()
     ).then(
       data => {
         setBackendData(data)
       }
-    )
+    ) //This is a simple fetch request to get all recipes from the backend
   }, [])
 
   return (
