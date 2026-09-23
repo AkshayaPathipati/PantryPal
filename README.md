@@ -1,4 +1,4 @@
 Akshaya
 Oliver
-Katie
 Raquel
+Katie
