@@ -53,6 +53,22 @@ const recipeSchema = new mongoose.Schema(
 
 const Recipe = mongoose.model("Recipe", recipeSchema);
 
+app.get("/api/recipes", async (req, res) => {
+  try {
+    const recipes = await Recipe.find().sort({ createdAt: -1 });
+
+    res.json({
+      recipes,
+    });
+  } catch (error) {
+    console.error("Failed to retrieve recipes:", error);
+
+    res.status(500).json({
+      message: "The server could not retrieve recipes.",
+    });
+  }
+});
+
 app.post("/api/recipes", async (req, res) => {
     try{
         const {username, recipeName} = req.body;
@@ -116,7 +132,7 @@ async function startServer() {
       console.log(`Server started on port ${PORT}`);
     });
   } catch (error) {
-    console.error("Server startup failed:", error);
+    console.error("Server startup failed:", error.message);
     process.exit(1);
   }
 }

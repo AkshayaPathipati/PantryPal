@@ -1,4 +1,12 @@
-import { useState } from "react";
+import * as React from "react";
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            [elementName: string]: any;
+        }
+    }
+}
 
 function Upload() {
     //practice code, IGNORE
@@ -29,7 +37,7 @@ function Upload() {
     
     */
 
-    const [formData, setFormData] = useState({ username: '', recipeName: '' });
+    const [formData, setFormData] = React.useState({ username: '', recipeName: '' });
 
     //this is to handle input from the user
     //e, the character within the parentheses, is the 'event', which is the input from the user
@@ -37,11 +45,11 @@ function Upload() {
     // in the state variable formData
     //[e.target.name] is the name of the input field, which is either 'username' or 'recipeName'
     //[e.target.value] is the value of the input field, which is the actual input from the user
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: Event & { target: HTMLInputElement }) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
-    const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => { //FormEvent deprecated
+    const handleSubmit = async (e: Event) => { //FormEvent deprecated
         e.preventDefault();
         try {
             //await is a keyword to pause the execution of the fuction til the server responds
