@@ -2,20 +2,29 @@ import React, { useEffect, useState } from 'react';
 import Upload from "./Upload.tsx";
 
 function App() {
-  // const [recipes, setRecipes] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState("");
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const [backendData, setBackendData] = useState([{}])
+  //const [backendData, setBackendData] = useState([{}])  
 
   useEffect(() => {
-    fetch("https://pantrypal-sbeo.onrender.com/api/recipes").then( //http://localhost:5000/api/recipes
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data)
-      }
-    ) //This is a simple fetch request to get all recipes from the backend
+    fetch("https://pantrypal-sbeo.onrender.com/api/recipes", { //http://localhost:5000/api/recipes
+      cache:"no-store",
+    }).then(response => {
+      if (!response.ok) throw new Error(`Server returned ${response.status}`);
+
+      return response.json()
+    }).then(data => {
+      console.log("Backend response:", data);
+      setRecipes(data.recipes || []);
+      //setBackendData(data)
+    }).catch(error => {
+      console.error("Error fetching recipes:", error);
+      setError(error.message);
+    }).finally(() => {
+      setLoading(false);
+    });
   }, [])
 
   return (
@@ -28,7 +37,7 @@ function App() {
 
       {loading && <p>Loading recipes...</p>}
 
-      {error && <p>Failed to load recipes: {error}</p>}
+      {error && <p>Error: {error}</p>}
 
       {!loading && !error && recipes.length === 0 && (
         <p>No recipes have been submitted.</p>
