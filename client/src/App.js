@@ -5,7 +5,7 @@ function App() {
   const [backendData, setBackendData] = useState([{}])
 
   useEffect(() => {
-    fetch("/api").then(
+    fetch("https://pantrypal-sbeo.onrender.com/api").then( //there might be something to tweak to make this just "/api"
       response => response.json()
     ).then(
       data => {
