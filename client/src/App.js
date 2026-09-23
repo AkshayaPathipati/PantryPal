@@ -9,7 +9,7 @@ function App() {
   const [backendData, setBackendData] = useState([{}])
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/recipes").then( //https://pantrypal-sbeo.onrender.com/api/recipes
+    fetch("https://pantrypal-sbeo.onrender.com/api/recipes").then( //http://localhost:5000/api/recipes
       response => response.json()
     ).then(
       data => {

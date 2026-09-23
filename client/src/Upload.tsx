@@ -54,7 +54,7 @@ function Upload() {
         try {
             //await is a keyword to pause the execution of the fuction til the server responds
             //fetch is the built-in browser tool used to make HTTP requests to the server
-            const response = await fetch('http://localhost:5000/api/recipes', { //https://pantrypal-sbeo.onrender.com/api/recipes
+            const response = await fetch('https://pantrypal-sbeo.onrender.com/api/recipes', { //http://localhost:5000/api/recipes
                 //look up this line, if required, implement api/auth/register and handle the request
 
                 // is the endpoint we are sending the request to
