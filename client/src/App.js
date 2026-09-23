@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Upload from "./Upload.tsx";
 
 function App() {
-  const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  // const [recipes, setRecipes] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState("");
 
   const [backendData, setBackendData] = useState([{}])
 
