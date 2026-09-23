@@ -77,9 +77,8 @@ app.post("/api/recipes", async (req, res) => {
             recipeName,
         });
 
-        let collection = db.collection("records");
-        let result = await collection.insertOne(recipe);
-
+        // let collection = db.collection("records");
+        // let result = await collection.insertOne(recipe);
 
         return res.status(201).json({
             message: "Recipe saved successfully",
