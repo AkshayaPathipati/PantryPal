@@ -43,7 +43,7 @@ function App() {
         <p>No recipes have been submitted.</p>
       )}
 
-      {[...recipes].reverse.map((recipe) => (
+      {recipes.map((recipe) => (
         <div key={recipe._id}>
           <h3>{recipe.recipeName}</h3>
           <p>Submitted by: {recipe.username}</p>
