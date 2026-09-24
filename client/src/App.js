@@ -89,6 +89,18 @@ function App() {
         <div key={recipe._id}>
           <h3>{recipe.recipeName}</h3>
           <p>Submitted by: {recipe.username}</p>
+        //displays recipe with ingredients
+        <h4>Ingredients:</h4>
+
+        {recipe.ingredients && recipe.ingredients.length > 0 ? (
+          <ul>
+            {recipe.ingredients.map((ingredient, index) => (
+              <li key={index}>{ingredient}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>No ingredients listed.</p>
+        )}
         </div>
       ))}
 
