@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from 'react';
 
 declare global {
     namespace JSX {
@@ -9,35 +9,13 @@ declare global {
 }
 
 function Upload() {
-    //practice code, IGNORE
-
-    //    const handleSubmit = async (formData: any) => {
-    //        const username = formData.get('username');
-    //        const recipeName = formData.get('recipeName');
-
-    //        console.log('Username:', username, ' Recipe Name:', recipeName);
-    //    };
-
-    //    return (
-    //        <form action={handleSubmit}>
-    //            <div className="col-auto">
-    //                <label>Username: </label>
-    //                <input type="text" className="form-control" id="inputUsername" placeholder="Username..." name="username" />
-    //                <label>Recipe Name: </label>
-    //                <input type="text" className="form-control" id="inputRecipeName" placeholder="Name..." name="recipeName" />
-    //                <button type="submit" className="btn btn-primary mb-3">Submit Recipe :D</button>
-    //            </div>
-    //        </form>
-    //    );
-
-    /*
- 
-    JSX from: https://getbootstrap.com/docs/5.3/forms/form-control/?#readonly-plain-text
-    specifically the "readonly plain text" section
-    
-    */
 
     const [formData, setFormData] = React.useState({ username: '', recipeName: '' });
+    // Stores the ingredient the user is currently typing.
+    const [ingredient, setIngredient] = useState("");
+
+    // Stores the list of ingredients the user has added.
+    const [ingredients, setIngredients] = useState<string[]>([]);
 
     //this is to handle input from the user
     //e, the character within the parentheses, is the 'event', which is the input from the user
@@ -47,11 +25,16 @@ function Upload() {
     //[e.target.value] is the value of the input field, which is the actual input from the user
     const handleChange = (e: Event & { target: HTMLInputElement }) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
+    };
 
-    const handleSubmit = async (e: Event) => { //FormEvent deprecated; ChangeEvent supposedly doesn't work. Event does though
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
+            const submittedIngredients = [
+                ...ingredients,
+                ...(ingredient.trim() ? [ingredient.trim()] : []),
+            ];
+
             //await is a keyword to pause the execution of the fuction til the server responds
             //fetch is the built-in browser tool used to make HTTP requests to the server
             const response = await fetch('https://pantrypal-sbeo.onrender.com/api/recipes', { //http://localhost:5000/api/recipes
@@ -63,9 +46,9 @@ function Upload() {
                 //tells the server that the data is formatted for JSON files and to read it as such
                 headers: { 'Content-Type': 'application/json' },
                 //converts the formData object into a JSON string so that it can be sent to the server
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ ...formData, ingredients: submittedIngredients }),
             });
-            
+
             //wait for the servert to respond, and then convert the response into a JSON object so that
             //it can be read by the client
             const data = await response.json();
@@ -85,6 +68,34 @@ function Upload() {
         //****in JS/TS there can't bee a ';' after the try section, or it won't detect the catch section
     };
 
+    // ************************* Adding code for user to imput their Ingredients
+
+    // Adds an ingredient to the list.
+    const addIngredient = () => {
+        // Check that the input is not empty or just spaces.
+        if (ingredient.trim() !== "") {
+            // Add the new ingredient to the existing list.
+            setIngredients([...ingredients, ingredient.trim()]);
+
+            // Clear the input after adding the ingredient.
+            setIngredient("");
+        }
+    };
+
+    // Allows the user to press keyboard "Enter" to add an ingredient.
+    const handleKeyDown = (event) => {
+        if (event.key === "Enter") {
+            addIngredient();
+        }
+    };
+
+    // Removes an ingredient from the list.
+    const deleteIngredient = (indexToDelete: number) => {
+        setIngredients(
+            ingredients.filter((_, index) => index !== indexToDelete)
+        );
+    };
+
     //'col-auto' is a bootstrap class that makes the form responsive to the size of the screen and automatically adjuststhe width 
     //of the form to fit the content
     return (
@@ -95,6 +106,35 @@ function Upload() {
                 <label>Recipe Name: </label>
                 <input type="text" name="recipeName" className="form-control" placeholder="Enter Recipe Name..." onChange={handleChange} required />
                 <br></br>
+                <h2>What ingredients do you currently own?</h2>
+                <input
+                    type="text"
+                    name="ingredients"
+                    placeholder="Enter an ingredient"
+                    value={ingredient}
+                    onChange={(event) => setIngredient(event.target.value)}
+                    onKeyDown={handleKeyDown}
+                />
+
+                <button type="button" onClick={addIngredient}>
+                    Add
+                </button>
+
+                <h3>Your Ingredients:</h3>
+                <ul>
+                    {ingredients.map((item, index) => (
+                        <li key={index}>
+                            <button
+                                type="button"
+                                onClick={() => deleteIngredient(index)}
+                            >
+                                Delete
+                            </button>
+
+                            {item}
+                        </li>
+                    ))}
+                </ul>
                 <button type="submit" className="btn btn-primary">Submit Recipe :D</button>
             </div>
         </form>

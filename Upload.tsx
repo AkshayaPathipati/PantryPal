@@ -88,7 +88,7 @@ function Upload() {
                 <label>Recipe Name: </label>
                 <input type="text" name="recipeName" className="form-control" placeholder="Enter Recipe Name..." onChange={handleChange} required />
                 <br></br>
-                <button type="submit" className="btn btn-primary">Submit Recipe :D</button>
+                <button type="submit" className="btn btn-primary">SubmitRecipe :D</button>
             </div>
         </form>
     );
