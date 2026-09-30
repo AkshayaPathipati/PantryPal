@@ -57,7 +57,7 @@ function App() {
       {!loading && !error && [...recipes].reverse().map((recipe) => (
         <div key={recipe._id}>
           <h3>{recipe.recipeName}</h3>
-          <p>Ingredients: {recipe.ingredients}</p>
+          <p>Ingredients: {recipe.ingredients.join(', ')}</p>
           <p>Submitted by: {recipe.username}</p>
         </div>
       ))}
