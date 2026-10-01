@@ -59,6 +59,16 @@ function App() {
           <h3>{recipe.recipeName}</h3>
           <p>Ingredients: {recipe.ingredients.join(', ')}</p>
           <p>Submitted by: {recipe.username}</p>
+
+        
+          <ul>
+            {recipe.ingredients.map((ingredient, index) => (
+              <li key={index}>{ingredient}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>No ingredients listed.</p>
+        )}
         </div>
       ))}
 
