@@ -1,6 +1,5 @@
 | Class   | Owner | Used By                         |
 |---------|-------|---------------------------------|
-| Upload | Akshaya| Akshaya, Raquel                 |
-| Search | Katie  | Katie, Oliver                   |
-| Tag    | Oliver | Katie, Oliver                   |
+| Upload  | Katie  | Akshaya, Raquel, Katie         |
+| Tag    | Akshaya | Akshaya, Oliver                |
 | Recipe | Raquel | Akshaya, Katie, Oliver, Raquel  |
