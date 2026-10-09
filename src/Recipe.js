@@ -1,20 +1,22 @@
-class Recipe
+class Recipe 
 {
-  constructor(recipeName, username, dateUploaded, ingredients, instructions) 
+  private recipeName: string;
+  private username: string;
+  private dateUploaded: Date;
+  private ingredients: string;
+  private instructions: string;
+
+  constructor(recipeName, username, dateUploaded,
+    ingredients,instructions) 
   {
-    this.recipeName = recipeName;
-    this.username = username;
-    this.dateUploaded = dateUploaded;
-    this.ingredients = ingredients;
-    this.instructions = instructions;
+    
   }
 
-  getRecipeName() {}
+  getRecipeName():{}
 
-  getUsername() {}
+  getUsername():{}
 
-  getDateUploaded(){}
-
+  getDateUploaded():{}
 }
 
 export default Recipe;
