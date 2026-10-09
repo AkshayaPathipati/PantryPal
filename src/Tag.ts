@@ -1,10 +1,10 @@
 class Tag {
-  name: String;
-  active: boolean;
+  private name: String;
+  private active: boolean;
 
-  Tag(name, active) {}
+  public Tag(name, active) {}
 
-  getName(): String {}
+  public getName(): String {}
 
-  setName(name) {}
+  public setName(name) {}
 }
