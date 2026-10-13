@@ -1,6 +1,5 @@
+
 const path = require('path')
-
-
 const express = require('express');
 const cors = require('cors');
 
@@ -52,6 +51,11 @@ const recipeSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    instructions: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   }
 );
 
@@ -75,11 +79,12 @@ app.get("/api/recipes", async (req, res) => {
 
 app.post("/api/recipes", async (req, res) => {
   try {
-    const { username, recipeName, ingredients } = req.body;
+    const { username, recipeName, ingredients, instructions } = req.body;
     const recipe = await Recipe.create({
       username,
       recipeName,
       ingredients,
+      instructions,
     });
 
     // let collection = db.collection("records"); //what is db?
