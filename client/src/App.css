@@ -1,0 +1,89 @@
+body 
+{
+    background-color: lightblue; /* Sets the page background color */
+    font-family: Arial, Helvetica, sans-serif; /* Sets the default font */
+    margin: 30px; /* Adds space around the page */
+}
+
+/* Main container for the PantryPal app */
+.app-container
+{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Main heading of the app */
+h1 
+{ 
+    background-color: blue; /* Gives the heading a blue background */
+    color: white; /* Makes the heading text white */
+    text-align: center; /* Centers the heading text */
+    font-size: 50px; /* Sets the heading size */
+    font-family: "Comic Sans MS", sans-serif; /* Changes the heading font */
+    padding: 15px; /* Adds space inside the heading */
+}
+
+/* Section headings, such as Submitted Recipes */
+h2 
+{
+    background-color: rgb(80, 120, 255); /* Sets the heading background color */
+    color: white; /* Makes the heading text white */
+    padding-left: 30px; /* Adds space on the left */
+    padding-bottom: 10px; /* Adds space below the text */
+    padding-top: 10px; /* Adds space above the text */
+    margin-top: 2em; /* Adds space above each section */
+    font-size: 35px; /* Sets the heading size */
+    font-family: "Comic Sans MS", sans-serif; /* Changes the heading font */
+}
+
+/* Smaller headings, such as individual recipe names */
+h3 
+{
+    font-size: 30px; /* Sets the heading size */
+}
+
+/* Styles text inside elements with the textSection class */
+.textSection 
+{
+    line-height: 1.5; /* Adds space between lines */
+    font-size: 20px; /* Sets the text size */
+}
+
+/* Styles text input fields and text areas inside the app */
+.app-container input,
+.app-container textarea 
+{
+    padding: 10px; /* Adds space inside the fields */
+    margin: 5px; /* Adds space around the fields */
+    border: 1px solid gray; /* Adds a gray border */
+    border-radius: 5px; /* Rounds the corners */
+    font-size: 16px; /* Sets the text size */
+}
+
+/* Styles buttons inside the app */
+.app-container button 
+{
+    background-color: blue; /* Sets the button background */
+    color: white; /* Makes button text white */
+    padding: 10px 15px; /* Adds space inside the button */
+    margin: 5px; /* Adds space around the button */
+    border: none; /* Removes the default border */
+    border-radius: 5px; /* Rounds the button corners */
+    cursor: pointer; /* Shows a pointer when hovering over the button */
+    font-size: 16px; /* Sets the button text size */
+}
+
+/* Changes the button color when the mouse hovers over it */
+.app-container button:hover 
+{
+    background-color: rgb(50, 80, 200);
+}
+
+/* Styles each submitted recipe */
+.recipe-card 
+{
+    background-color: white; /* Gives each recipe a white background */
+    padding: 20px; /* Adds space inside the recipe card */
+    margin-top: 20px; /* Adds space above each recipe */
+    border: 1px solid gray; /* Adds a border around the recipe */
+    border-radius: 8px; /* Rounds the recipe card corners */
+}
