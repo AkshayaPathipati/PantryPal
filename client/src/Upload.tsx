@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from "react";
 
 declare global {
     namespace JSX {
@@ -8,52 +8,104 @@ declare global {
     }
 }
 
-function Upload() {
+function Upload({ onRecipeSubmitted }: { onRecipeSubmitted: () => void }) {
+    const [formData, setFormData] = React.useState({
+        username: '',
+        recipeName: '',
+        ingredients: '',
+        instructions: ''
+    });
 
-    const [formData, setFormData] = React.useState({ username: '', recipeName: '' });
-    // Stores the ingredient the user is currently typing.
-    const [ingredient, setIngredient] = useState("");
+    // Stores the ingredient currently being typed
+    const [ingredient, setIngredient] = React.useState('');
 
-    // Stores the list of ingredients the user has added.
-    const [ingredients, setIngredients] = useState<string[]>([]);
+    // Stores the list of ingredients added by the user
+    const [ingredients, setIngredients] = React.useState<string[]>([]);
 
-    //this is to handle input from the user
-    //e, the character within the parentheses, is the 'event', which is the input from the user
-    //...formData is a spread operator, which makes a shallow copy of the data in the form so that it can be stored 
-    // in the state variable formData
-    //[e.target.name] is the name of the input field, which is either 'username' or 'recipeName'
-    //[e.target.value] is the value of the input field, which is the actual input from the user
-    const handleChange = (e: Event & { target: HTMLInputElement }) => {
+    // Handles input from the user
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    // Adds an ingredient to the list
+    const addIngredient = () => {
+        const newIngredient = ingredient.trim();
+
+        if (newIngredient !== '') {
+            const updatedIngredients = [...ingredients, newIngredient];
+
+            setIngredients(updatedIngredients);
+            setFormData({
+                ...formData,
+                ingredients: updatedIngredients.join(', ')
+            });
+
+            setIngredient('');
+        }
+    };
+
+    // Allows the user to press Enter to add an ingredient
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addIngredient();
+        }
+    };
+
+    // Deletes an ingredient from the list
+    const deleteIngredient = (index: number) => {
+        const updatedIngredients = ingredients.filter(
+            (_, i) => i !== index
+        );
+
+        setIngredients(updatedIngredients);
+        setFormData({
+            ...formData,
+            ingredients: updatedIngredients.join(', ')
+        });
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (ingredients.length === 0) {
+            alert('Please add at least one ingredient.');
+            return;
+        }
+
         try {
-            const submittedIngredients = [
-                ...ingredients,
-                ...(ingredient.trim() ? [ingredient.trim()] : []),
-            ];
-
-            //await is a keyword to pause the execution of the fuction til the server responds
-            //fetch is the built-in browser tool used to make HTTP requests to the server
-            const response = await fetch('https://pantrypal-sbeo.onrender.com/api/recipes', { //http://localhost:5000/api/recipes
-                //look up this line, if required, implement api/auth/register and handle the request
-
-                // is the endpoint we are sending the request to
-                //POST request is used to send/submit new data to a server
+            // Sends the recipe data to the server
+            const response = await fetch('https://pantrypal-sbeo.onrender.com/api/recipes', {
+                // http://localhost:5000/api/recipes
                 method: 'POST',
-                //tells the server that the data is formatted for JSON files and to read it as such
+
+                // Tells the server that the data is formatted as JSON
                 headers: { 'Content-Type': 'application/json' },
-                //converts the formData object into a JSON string so that it can be sent to the server
-                body: JSON.stringify({ ...formData, ingredients: submittedIngredients }),
+
+                // Converts the formData object into a JSON string
+                body: JSON.stringify({
+                        ...formData,
+                        ingredients: ingredients,
+                    }),
             });
 
-            //wait for the servert to respond, and then convert the response into a JSON object so that
-            //it can be read by the client
+            // Converts the server response into a JSON object
             const data = await response.json();
+
             if (response.ok) {
                 alert('Successfully submitted recipe!');
+                onRecipeSubmitted();
+
+                // Clears the form after successfully submitting the recipe
+                setFormData({
+                    username: '',
+                    recipeName: '',
+                    ingredients: '',
+                    instructions: ''
+                });
+
+                setIngredients([]);
+                setIngredient('');
             }
             else {
                 alert('Failed to submit recipe: ' + data.message);
@@ -61,84 +113,98 @@ function Upload() {
         }
         catch (error) {
             console.error('Error:', error);
-        };
-
-        //try-catch is trying to send the data to the server, and if it fails, it will catch the error and log it to the console
-
-        //****in JS/TS there can't bee a ';' after the try section, or it won't detect the catch section
-    };
-
-    // ************************* Adding code for user to imput their Ingredients
-
-    // Adds an ingredient to the list.
-    const addIngredient = () => {
-        // Check that the input is not empty or just spaces.
-        if (ingredient.trim() !== "") {
-            // Add the new ingredient to the existing list.
-            setIngredients([...ingredients, ingredient.trim()]);
-
-            // Clear the input after adding the ingredient.
-            setIngredient("");
         }
     };
 
-    // Allows the user to press keyboard "Enter" to add an ingredient.
-    const handleKeyDown = (event) => {
-        if (event.key === "Enter") {
-            addIngredient();
-        }
-    };
-
-    // Removes an ingredient from the list.
-    const deleteIngredient = (indexToDelete: number) => {
-        setIngredients(
-            ingredients.filter((_, index) => index !== indexToDelete)
-        );
-    };
-
-    //'col-auto' is a bootstrap class that makes the form responsive to the size of the screen and automatically adjuststhe width 
-    //of the form to fit the content
+    //'col-auto' is a bootstrap class that makes the form responsive
     return (
         <form onSubmit={handleSubmit}>
             <div className="col-auto">
+
                 <label>Username: </label>
-                <input type="text" name="username" className="form-control" placeholder="Enter Username..." onChange={handleChange} required />
-                <label>Recipe Name: </label>
-                <input type="text" name="recipeName" className="form-control" placeholder="Enter Recipe Name..." onChange={handleChange} required />
-                <br></br>
-                <h2>What ingredients do you currently own?</h2>
                 <input
                     type="text"
-                    name="ingredients"
-                    placeholder="Enter an ingredient"
+                    name="username"
+                    className="form-control"
+                    placeholder="Enter Username..."
+                    value={formData.username}
+                    onChange={handleChange}
+                    required
+                />
+
+                <br></br>
+
+                <label>Recipe Name: </label>
+                <input
+                    type="text"
+                    name="recipeName"
+                    className="form-control"
+                    placeholder="Enter Recipe Name..."
+                    value={formData.recipeName}
+                    onChange={handleChange}
+                    required
+                />
+
+                <br></br>
+
+                {/* Allows the user to add ingredients one at a time */}
+                <label>Recipe Ingredients:  </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter ingredient..."
                     value={ingredient}
-                    onChange={(event) => setIngredient(event.target.value)}
+                    onChange={(e) => setIngredient(e.target.value)}
                     onKeyDown={handleKeyDown}
                 />
 
-                <button type="button" onClick={addIngredient}>
+                <button
+                    type="button"
+                    onClick={addIngredient}
+                >
                     Add
                 </button>
 
-                <h3>Your Ingredients:</h3>
+                {/* Displays all ingredients entered by the user */}
                 <ul>
                     {ingredients.map((item, index) => (
                         <li key={index}>
+                            {item}
                             <button
                                 type="button"
                                 onClick={() => deleteIngredient(index)}
                             >
                                 Delete
                             </button>
-
-                            {item}
                         </li>
                     ))}
                 </ul>
-                <button type="submit" className="btn btn-primary">Submit Recipe :D</button>
+
+                {/* Allows the user to enter the instructions for the recipe */}
+                <label>Instructions: </label>
+                <br></br>
+                <textarea
+                    name="instructions"
+                    className="form-control"
+                    placeholder="Enter instructions..."
+                    value={formData.instructions}
+                    onChange={handleChange}
+                    rows={3}
+                    required
+                />
+
+                <br></br>
+
+                <button
+                    type="submit"
+                    className="btn btn-primary"
+                >
+                    Submit Recipe :D
+                </button>
+
             </div>
         </form>
-    ); //there are errors here but somehow it builds and deploys
+    );
 }
 
 export default Upload;
