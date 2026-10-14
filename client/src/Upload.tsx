@@ -1,127 +1,121 @@
 import * as React from "react";
 
-declare global {
-    namespace JSX {
-        interface IntrinsicElements {
-            [elementName: string]: any;
-        }
-    }
-}
-
-function Upload({ onRecipeSubmitted }: { onRecipeSubmitted: () => void }) {
+function Upload({onRecipeSubmitted,}: {onRecipeSubmitted: () => void;}) {
+    // Stores the recipe information entered in the form.
     const [formData, setFormData] = React.useState({
-        username: '',
-        recipeName: '',
-        ingredients: '',
-        instructions: ''
+        username: "",
+        recipeName: "",
+        instructions: "",
     });
 
-    // Stores the ingredient currently being typed
-    const [ingredient, setIngredient] = React.useState('');
+    // Stores the ingredient currently being typed.
+    const [ingredient, setIngredient] = React.useState("");
 
-    // Stores the list of ingredients added by the user
+    // Stores the ingredients added to this recipe.
     const [ingredients, setIngredients] = React.useState<string[]>([]);
 
-    // Handles input from the user
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    // Updates the form when the user types.
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        setFormData({...formData, [e.target.name]: e.target.value,});
     };
 
-    // Adds an ingredient to the list
+    // Adds an ingredient to the recipe.
     const addIngredient = () => {
         const newIngredient = ingredient.trim();
 
-        if (newIngredient !== '') {
-            const updatedIngredients = [...ingredients, newIngredient];
-
-            setIngredients(updatedIngredients);
-            setFormData({
-                ...formData,
-                ingredients: updatedIngredients.join(', ')
-            });
-
-            setIngredient('');
+        if (newIngredient !== "") {
+            setIngredients([...ingredients, newIngredient]);
+            setIngredient("");
         }
     };
 
-    // Allows the user to press Enter to add an ingredient
+    // Allows Enter to add an ingredient without submitting the form.
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
+        if (e.key === "Enter") {
             e.preventDefault();
             addIngredient();
         }
     };
 
-    // Deletes an ingredient from the list
-    const deleteIngredient = (index: number) => {
-        const updatedIngredients = ingredients.filter(
-            (_, i) => i !== index
+    // Removes an ingredient from the recipe.
+    const deleteIngredient = (indexToDelete: number) => {
+        setIngredients(
+            ingredients.filter((_, index) => index !== indexToDelete)
         );
-
-        setIngredients(updatedIngredients);
-        setFormData({
-            ...formData,
-            ingredients: updatedIngredients.join(', ')
-        });
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    // Clears the form after a successful submission.
+    const resetForm = () => {
+        setFormData({
+            username: "",
+            recipeName: "",
+            instructions: "",
+        });
+
+        setIngredients([]);
+        setIngredient("");
+    };
+
+    // Sends the recipe to the backend.
+    const handleSubmit = async (
+        e: React.FormEvent<HTMLFormElement>
+    ) => {
         e.preventDefault();
 
         if (ingredients.length === 0) {
-            alert('Please add at least one ingredient.');
+            alert("Please add at least one ingredient.");
             return;
         }
 
         try {
-            // Sends the recipe data to the server
-            const response = await fetch('https://pantrypal-sbeo.onrender.com/api/recipes', {
-                // http://localhost:5000/api/recipes
-                method: 'POST',
+            const response = await fetch(
+                "https://pantrypal-sbeo.onrender.com/api/recipes",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        ...formData,
+                        ingredients: ingredients,
+                    }),
+                }
+            );
 
-                // Tells the server that the data is formatted as JSON
-                headers: { 'Content-Type': 'application/json' },
-
-                // Converts the formData object into a JSON string
-                body: JSON.stringify({
-                    ...formData,
-                    ingredients: ingredients,
-                }),
-            });
-
-            // Converts the server response into a JSON object
             const data = await response.json();
 
-            if (response.ok) {
-                alert('Successfully submitted recipe!');
-                onRecipeSubmitted();
-
-                // Clears the form after successfully submitting the recipe
-                setFormData({
-                    username: '',
-                    recipeName: '',
-                    ingredients: '',
-                    instructions: ''
-                });
-
-                setIngredients([]);
-                setIngredient('');
+            if (!response.ok) {
+                throw new Error(
+                    data.message || "Failed to submit recipe."
+                );
             }
-            else {
-                alert('Failed to submit recipe: ' + data.message);
-            }
-        }
-        catch (error) {
-            console.error('Error:', error);
+
+            alert("Successfully submitted recipe!");
+
+            resetForm();
+
+            // Refreshes the submitted recipes in App.js.
+            onRecipeSubmitted();
+        } catch (error) {
+            console.error("Error submitting recipe:", error);
+
+            const message =
+                error instanceof Error
+                    ? error.message
+                    : "An unexpected error occurred.";
+
+            alert("Failed to submit recipe: " + message);
         }
     };
 
-    //'col-auto' is a bootstrap class that makes the form responsive
     return (
         <form onSubmit={handleSubmit}>
             <div className="col-auto">
+                {/* Username input */}
+                <label>Username:</label>
 
-                <label>Username: </label>
                 <input
                     type="text"
                     name="username"
@@ -132,9 +126,11 @@ function Upload({ onRecipeSubmitted }: { onRecipeSubmitted: () => void }) {
                     required
                 />
 
-                <br></br>
+                <br />
 
-                <label>Recipe Name: </label>
+                {/* Recipe name input */}
+                <label>Recipe Name:</label>
+
                 <input
                     type="text"
                     name="recipeName"
@@ -145,31 +141,30 @@ function Upload({ onRecipeSubmitted }: { onRecipeSubmitted: () => void }) {
                     required
                 />
 
-                <br></br>
+                <br />
 
-                {/* Allows the user to add ingredients one at a time */}
-                <label>Recipe Ingredients:  </label>
+                {/* Ingredient input */}
+                <label>Recipe Ingredients:</label>
+
                 <input
                     type="text"
                     className="form-control"
-                    placeholder="Enter ingredient..."
+                    placeholder="Enter Ingredient..."
                     value={ingredient}
                     onChange={(e) => setIngredient(e.target.value)}
                     onKeyDown={handleKeyDown}
                 />
 
-                <button
-                    type="button"
-                    onClick={addIngredient}
-                >
+                <button type="button" onClick={addIngredient}>
                     Add
                 </button>
 
-                {/* Displays all ingredients entered by the user */}
+                {/* Displays the ingredients in the recipe. */}
                 <ul>
                     {ingredients.map((item, index) => (
                         <li key={index}>
                             {item}
+
                             <button
                                 type="button"
                                 onClick={() => deleteIngredient(index)}
@@ -180,33 +175,31 @@ function Upload({ onRecipeSubmitted }: { onRecipeSubmitted: () => void }) {
                     ))}
                 </ul>
 
-                {/* Allows the user to enter the instructions for the recipe */}
-                <label>Instructions: </label>
-                <br></br>
+                {/* Recipe instructions */}
+                <label>Instructions:</label>
+
+                <br />
+
                 <textarea
                     name="instructions"
                     className="form-control"
-                    placeholder="Enter instructions..."
+                    placeholder="Enter Instructions..."
                     value={formData.instructions}
                     onChange={handleChange}
-                    rows={10}
-                    cols={100}
+                    rows={3}
                     required
-                    white-space="pre-wrap"
                 />
 
-                <br></br>
+                <br />
 
-                <button
-                    type="submit"
-                    className="btn btn-primary"
-                >
+                {/* Submits the completed recipe. */}
+                <button type="submit" className="btn btn-primary">
                     Submit Recipe :D
                 </button>
-
             </div>
         </form>
     );
 }
 
 export default Upload;
+
