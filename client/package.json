@@ -2,7 +2,6 @@
   "homepage": "https://AkshayaPathipati.github.io/PantryPal",
   "name": "client",
   "version": "0.1.0",
-  "proxy": "http://localhost:5000",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.2",
