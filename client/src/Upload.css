@@ -1,0 +1,11 @@
+.instructions-list {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid gray;
+    border-radius: 8px;
+    width: max-content;
+
+    white-space: pre-wrap;
+    word-break: break-word;
+}

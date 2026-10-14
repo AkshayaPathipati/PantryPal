@@ -10,7 +10,7 @@ function App() {
 
   // const [backendData, setBackendData] = useState([{}]);
 
- const fetchRecipes = () => {
+  const fetchRecipes = () => {
     setLoading(true);
     setError("");
     fetch("https://pantrypal-sbeo.onrender.com/api/recipes", {
@@ -38,40 +38,8 @@ function App() {
       });
   };
   useEffect(() => {
-  fetchRecipes();
+    fetchRecipes();
   }, []);
-  // ************************* Adding code for user to imput their Ingredients
-  // Stores the ingredient the user is currently typing.
-  const [ingredient, setIngredient] = useState("");
-
-  // Stores the list of ingredients the user has added.
-  const [ingredients, setIngredients] = useState([]);
-
-  // Adds an ingredient to the list.
-  const addIngredient = () => {
-    // Check that the input is not empty or just spaces.
-    if (ingredient.trim() !== "") {
-      // Add the new ingredient to the existing list.
-      setIngredients([...ingredients, ingredient.trim()]);
-
-      // Clear the input after adding the ingredient.
-      setIngredient("");
-    }
-  };
-
-  // Allows the user to press keyboard "Enter" to add an ingredient.
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      addIngredient();
-    }
-  };
-
-  // Removes an ingredient from the list.
-  const deleteIngredient = (indexToDelete) => {
-    setIngredients(
-      ingredients.filter((_, index) => index !== indexToDelete)
-    );
-  };
 
   // ***************************
 
@@ -90,93 +58,43 @@ function App() {
         {showRecipes ? "Hide Submitted Recipes" : "Show Submitted Recipes"}
       </button>
 
-    {showRecipes && (
-      <>
-        {loading && <p>Loading recipes...</p>}
+      {showRecipes && (
+        <>
+          {loading && <p>Loading recipes...</p>}
 
-        {error && <p>Error: {error}</p>}
+          {error && <p>Error: {error}</p>}
 
-        {!loading && !error && recipes.length === 0 && (
-          <p>No recipes have been submitted.</p>
-        )}
+          {!loading && !error && recipes.length === 0 && (
+            <p>No recipes have been submitted.</p>
+          )}
 
-        {recipes.map((recipe) => (
-          <div className="recipe-card" key={recipe._id}>
+          {recipes.map((recipe) => (
+            <div className="recipe-card" key={recipe._id}>
 
-            <h3>{recipe.recipeName}</h3>
+              <h3>{recipe.recipeName}</h3>
 
-            <p>Submitted by: {recipe.username}</p>
+              <p>Submitted by: {recipe.username}</p>
 
-            <h4>Ingredients:</h4>
-            <ul>
-              {Array.isArray(recipe.ingredients) &&
-                recipe.ingredients.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-            </ul>
+              <h4>Ingredients:</h4>
+              <ul>
+                {Array.isArray(recipe.ingredients) &&
+                  recipe.ingredients.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+              </ul>
 
-            <h4>Instructions:</h4>
-            <p>{recipe.instructions}</p>
+              <h4>Instructions:</h4>
+              <ol>
+                {Array.isArray(recipe.instructions) &&
+                  recipe.instructions.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+              </ol>
 
-            {recipe.image && (
-              <div>
-                <h4>Picture:</h4>
-                <img
-                  src={recipe.image}
-                  alt={recipe.recipeName}
-                  width="300"
-                />
-              </div>
-            )}
-
-          <hr />
-
-        </div>
-      ))}
-    </>
-    )}
-
-      {/* ********************************Adding promt for user to imput their ingredients */}
-      <h2>What ingredients do you currently own?</h2>
-
-      {/*
-        The user can type an ingredient here.
-        Pressing Enter or clicking Add adds it to the list.
-      */}
-      <input
-        type="text"
-        placeholder="Enter an ingredient"
-        value={ingredient}
-        onChange={(event) => setIngredient(event.target.value)}
-        onKeyDown={handleKeyDown}
-      />
-
-      <button type="button" onClick={addIngredient}>
-        Add
-      </button>
-
-      <h3>Your Ingredients:</h3>
-
-      {/*
-        Displays all ingredients currently entered by the user in list format.
-        Each ingredient has its own Delete button.
-      */}
-      <ul>
-        {ingredients.map((item, index) => (
-          <li key={index}>
-            {item}
-
-            <button
-              type="button"
-              onClick={() => deleteIngredient(index)}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
-
-      {/* ************************************ */}
+            </div>
+          ))}
+        </>
+      )}
 
     </div>
   );

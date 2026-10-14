@@ -1,4 +1,5 @@
 import * as React from "react";
+import './Upload.css';
 
 declare global {
     namespace JSX {
@@ -16,11 +17,13 @@ function Upload({ onRecipeSubmitted }: { onRecipeSubmitted: () => void }) {
         instructions: ''
     });
 
-    // Stores the ingredient currently being typed
+    // Stores the ingredient/instruction currently being typed
     const [ingredient, setIngredient] = React.useState('');
+    const [instruction, setInstruction] = React.useState('');
 
-    // Stores the list of ingredients added by the user
+    // Stores the list of ingredients/instructions added by the user
     const [ingredients, setIngredients] = React.useState<string[]>([]);
+    const [instructions, setInstructions] = React.useState<string[]>([]);
 
     // Handles input from the user
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -44,11 +47,28 @@ function Upload({ onRecipeSubmitted }: { onRecipeSubmitted: () => void }) {
         }
     };
 
+    const addInstruction = () => {
+        const newInstruction = instruction.trim();
+
+        if (newInstruction !== '') {
+            const updatedInstructions = [...instructions, newInstruction];
+
+            setInstructions(updatedInstructions);
+            setFormData({
+                ...formData,
+                instructions: updatedInstructions.join(', ')
+            });
+
+            setInstruction('');
+        }
+    };
+
     // Allows the user to press Enter to add an ingredient
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             addIngredient();
+            addInstruction();
         }
     };
 
@@ -65,11 +85,28 @@ function Upload({ onRecipeSubmitted }: { onRecipeSubmitted: () => void }) {
         });
     };
 
+    const deleteInstruction = (index: number) => {
+        const updatedInstructions = instructions.filter(
+            (_, i) => i !== index
+        );
+
+        setInstructions(updatedInstructions);
+        setFormData({
+            ...formData,
+            instructions: updatedInstructions.join(', ')
+        });
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (ingredients.length === 0) {
             alert('Please add at least one ingredient.');
+            return;
+        }
+
+        if (instructions.length === 0) {
+            alert('Please add at least one instruction.');
             return;
         }
 
@@ -84,9 +121,10 @@ function Upload({ onRecipeSubmitted }: { onRecipeSubmitted: () => void }) {
 
                 // Converts the formData object into a JSON string
                 body: JSON.stringify({
-                        ...formData,
-                        ingredients: ingredients,
-                    }),
+                    ...formData,
+                    ingredients: ingredients,
+                    instructions: instructions,
+                }),
             });
 
             // Converts the server response into a JSON object
@@ -106,6 +144,8 @@ function Upload({ onRecipeSubmitted }: { onRecipeSubmitted: () => void }) {
 
                 setIngredients([]);
                 setIngredient('');
+                setInstructions([]);
+                setInstruction('');
             }
             else {
                 alert('Failed to submit recipe: ' + data.message);
@@ -187,11 +227,36 @@ function Upload({ onRecipeSubmitted }: { onRecipeSubmitted: () => void }) {
                     name="instructions"
                     className="form-control"
                     placeholder="Enter instructions..."
-                    value={formData.instructions}
-                    onChange={handleChange}
-                    rows={3}
+                    value={instruction}
+                    onChange={(e) => setInstruction(e.target.value)}
+                    rows={10}
+                    cols={100}
                     required
                 />
+
+                <button
+                    type="button"
+                    onClick={addInstruction}
+                >
+                    Add
+                </button>
+
+                {/* Displays all instructions entered by the user */}
+                <ol >
+                    {instructions.map((item, index) => (
+
+                        <li key={index}>
+                            <div className="instructions-list">{item}</div>
+                            <button
+                                type="button"
+                                onClick={() => deleteInstruction(index)}
+                            >
+                                Delete
+                            </button>
+                        </li>
+
+                    ))}
+                </ol>
 
                 <br></br>
 
