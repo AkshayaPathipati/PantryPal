@@ -10,7 +10,7 @@ function App() {
 
   // const [backendData, setBackendData] = useState([{}]);
 
- const fetchRecipes = () => {
+  const fetchRecipes = () => {
     setLoading(true);
     setError("");
     fetch("https://pantrypal-sbeo.onrender.com/api/recipes", {
@@ -38,7 +38,7 @@ function App() {
       });
   };
   useEffect(() => {
-  fetchRecipes();
+    fetchRecipes();
   }, []);
   // ************************* Adding code for user to imput their Ingredients
   // Stores the ingredient the user is currently typing.
@@ -90,65 +90,51 @@ function App() {
         {showRecipes ? "Hide Submitted Recipes" : "Show Submitted Recipes"}
       </button>
 
-    {showRecipes && (
-      <>
-        {loading && <p>Loading recipes...</p>}
+      {showRecipes && (
+        <>
+          {loading && <p>Loading recipes...</p>}
 
-        {error && <p>Error: {error}</p>}
+          {error && <p>Error: {error}</p>}
 
-        {!loading && !error && recipes.length === 0 && (
-          <p>No recipes have been submitted.</p>
-        )}
+          {!loading && !error && recipes.length === 0 && (
+            <p>No recipes have been submitted.</p>
+          )}
 
-        {recipes.map((recipe) => (
-          <div className="recipe-card" key={recipe._id}>
+          {recipes.map((recipe) => (
+            <div className="recipe-card" key={recipe._id}>
 
-            <h3>{recipe.recipeName}</h3>
+              <h3>{recipe.recipeName}</h3>
 
-            <p>Submitted by: {recipe.username}</p>
+              <p>Submitted by: {recipe.username}</p>
 
-            <h4>Ingredients:</h4>
-            <ul>
-              {Array.isArray(recipe.ingredients) &&
-                recipe.ingredients.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-            </ul>
+              <h4>Ingredients:</h4>
+              <ul>
+                {Array.isArray(recipe.ingredients) &&
+                  recipe.ingredients.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+              </ul>
 
-            <h4>Instructions:</h4>
-            <p>{recipe.instructions}</p>
+              <h4>Instructions:</h4>
+              <p>{recipe.instructions}</p>
 
-            {recipe.image && (
-              <div>
-                <h4>Picture:</h4>
-                <img
-                  src={recipe.image}
-                  alt={recipe.recipeName}
-                  width="300"
-                />
-              </div>
-            )}
+              {recipe.image && (
+                <div>
+                  <h4>Picture:</h4>
+                  <img
+                    src={recipe.image}
+                    alt={recipe.recipeName}
+                    width="300"
+                  />
+                </div>
+              )}
 
-          <hr />
+              <hr />
 
-      {recipes.map((recipe) => (
-        <div key={recipe._id}>
-          <h3>{recipe.recipeName}</h3>
-          <p>Submitted by: {recipe.username}</p>
-
-        
-          <ul>
-            {recipe.ingredients.map((ingredient, index) => (
-              <li key={index}>{ingredient}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>No ingredients listed.</p>
-        )}
-        </div>
-      ))}
-    </>
-    )}
+            </div>
+          ))}
+        </>
+      )}
 
       {/* ********************************Adding promt for user to imput their ingredients */}
       <h2>What ingredients do you currently own?</h2>
@@ -197,4 +183,3 @@ function App() {
 }
 
 export default App;
-

@@ -84,9 +84,9 @@ function Upload({ onRecipeSubmitted }: { onRecipeSubmitted: () => void }) {
 
                 // Converts the formData object into a JSON string
                 body: JSON.stringify({
-                        ...formData,
-                        ingredients: ingredients,
-                    }),
+                    ...formData,
+                    ingredients: ingredients,
+                }),
             });
 
             // Converts the server response into a JSON object
@@ -189,8 +189,10 @@ function Upload({ onRecipeSubmitted }: { onRecipeSubmitted: () => void }) {
                     placeholder="Enter instructions..."
                     value={formData.instructions}
                     onChange={handleChange}
-                    rows={3}
+                    rows={10}
+                    cols={100}
                     required
+                    white-space="pre-wrap"
                 />
 
                 <br></br>
