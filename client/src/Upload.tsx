@@ -1,12 +1,10 @@
 import * as React from "react";
+import Recipe from "./Recipe.js";
 
-function Upload({onRecipeSubmitted,}: {onRecipeSubmitted: () => void;}) {
-    // Stores the recipe information entered in the form.
-    const [formData, setFormData] = React.useState({
-        username: "",
-        recipeName: "",
-        instructions: "",
-    });
+function Upload({ onRecipeSubmitted, }: { onRecipeSubmitted: () => void; }) {
+    const [username, setUsername] = React.useState("");
+    const [recipeName, setRecipeName] = React.useState("");
+    const [instructions, setInstructions] = React.useState("");
 
     // Stores the ingredient currently being typed.
     const [ingredient, setIngredient] = React.useState("");
@@ -14,11 +12,19 @@ function Upload({onRecipeSubmitted,}: {onRecipeSubmitted: () => void;}) {
     // Stores the ingredients added to this recipe.
     const [ingredients, setIngredients] = React.useState<string[]>([]);
 
-    // Updates the form when the user types.
+    // Updates the matching form field when the user types.
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-        setFormData({...formData, [e.target.name]: e.target.value,});
+        const { name, value } = e.currentTarget;
+
+        if (name === "username") {
+            setUsername(value);
+        } else if (name === "recipeName") {
+            setRecipeName(value);
+        } else if (name === "instructions") {
+            setInstructions(value);
+        }
     };
 
     // Adds an ingredient to the recipe.
@@ -48,12 +54,9 @@ function Upload({onRecipeSubmitted,}: {onRecipeSubmitted: () => void;}) {
 
     // Clears the form after a successful submission.
     const resetForm = () => {
-        setFormData({
-            username: "",
-            recipeName: "",
-            instructions: "",
-        });
-
+        setUsername("");
+        setRecipeName("");
+        setInstructions("");
         setIngredients([]);
         setIngredient("");
     };
@@ -70,6 +73,13 @@ function Upload({onRecipeSubmitted,}: {onRecipeSubmitted: () => void;}) {
         }
 
         try {
+            const recipe = new Recipe(
+                username,
+                recipeName,
+                ingredients,
+                instructions
+            );
+
             const response = await fetch(
                 "https://pantrypal-sbeo.onrender.com/api/recipes",
                 {
@@ -77,10 +87,7 @@ function Upload({onRecipeSubmitted,}: {onRecipeSubmitted: () => void;}) {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({
-                        ...formData,
-                        ingredients: ingredients,
-                    }),
+                    body: JSON.stringify(recipe),
                 }
             );
 
@@ -121,7 +128,7 @@ function Upload({onRecipeSubmitted,}: {onRecipeSubmitted: () => void;}) {
                     name="username"
                     className="form-control"
                     placeholder="Enter Username..."
-                    value={formData.username}
+                    value={username}
                     onChange={handleChange}
                     required
                 />
@@ -136,7 +143,7 @@ function Upload({onRecipeSubmitted,}: {onRecipeSubmitted: () => void;}) {
                     name="recipeName"
                     className="form-control"
                     placeholder="Enter Recipe Name..."
-                    value={formData.recipeName}
+                    value={recipeName}
                     onChange={handleChange}
                     required
                 />
@@ -184,7 +191,7 @@ function Upload({onRecipeSubmitted,}: {onRecipeSubmitted: () => void;}) {
                     name="instructions"
                     className="form-control"
                     placeholder="Enter Instructions..."
-                    value={formData.instructions}
+                    value={instructions}
                     onChange={handleChange}
                     rows={3}
                     required
@@ -202,4 +209,3 @@ function Upload({onRecipeSubmitted,}: {onRecipeSubmitted: () => void;}) {
 }
 
 export default Upload;
-
