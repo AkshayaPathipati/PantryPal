@@ -49,3 +49,11 @@ Questions for the original team:
 1. **Intent:** Was it intentional for the application to display a recipe picture if one exists, even though the current upload form and database setup do not include an image field?
 2. **Intent:** Was it intentional that duplicate ingredients can be added to the user's ingredient list?
 3. **Design:** Why does the Search class perform exact ingredient comparisons instead of supporting partial matches or alternate ingredient names?
+
+## Part 5: Candidate requirements
+
+Owner: Ubaydulla Noorullah
+
+| ID | Candidate requirement | Type | Source | Status | Acceptance criterion |
+|---|---|---|---|---|---|
+| CR-1 | The system shall load recipes when the front end runs on any local port. | Non-functional (usability) | Trace row 4, `server/server.js` → `app.use(cors({...}))` only allows localhost:3000 | Suspected bug | Running the client on localhost:3001 and clicking Show Submitted Recipes loads recipes with no CORS error |
