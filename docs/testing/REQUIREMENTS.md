@@ -1,14 +1,14 @@
-# Testable Requirements: [Project Name]
+# Testable Requirements: PantryPal
 
-**Team number:** [XX]
-**Inherited from:** Team [XX]
+**Team number:** 12
+**Inherited from:** Team 11
 
 ## Who Owns What
 
 | Area of the system | Owner | ID prefix |
 |---|---|---|
 | [example: Accounts and login] | [name] | [initials, like MG] |
-| | | |
+| Recipe Upload (form and post /api/recipes) | Ubaydulla Noorullah | UN |
 | | | |
 | | | |
 
@@ -23,27 +23,27 @@ RULES
 
 ---
 
-## Section: [Your Area] ([Your Name])
+## Section: Recipe Upload (Ubaydulla Noorullah)
 
 ### Stakeholder Goals
 
 | ID | Stakeholder | Goal |
 |---|---|---|
-| G-XX-01 | | |
+| G-UN-01 | Home Cook | Add their own recipe to PantryPal so other users can find it by searching for the ingredients they have. |
 
 ### Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| REQ-XX-01 | | | |
-| REQ-XX-02 | | | |
-| REQ-XX-03 | | | |
+| REQ-UN-01 | The system shall save the recipe named "Alfredo Pasta"  when a user submits a recipe named "Alfredo Pasta".  | Suspected Bug | CR-2 (Suspected Bug): The system shall save the recipe name submitted by a user.|
+| REQ-UN-02 | The system shall save the ingredients "pasta" and "alfredo sauce" when a user submits a recipe with those ingredients. | Suspected Bug | CR-6 (Suspected Bug): The system shall save the ingredients submitted with a recipe. |
+| REQ-UN-03 | The system shall save only one "Alfredo Pasta" recipe when a user double-clicks Submit Recipe. |  Suspected Bug | CR-5 (Suspected Bug): The system shall save only one recipe when the same submission is sent twice |
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| NFR-XX-01 | | | |
+| NFR-UN-01 | The "Alfredo Pasta" recipe shall appear in the recipe list within 2 seconds of submitting, with under 50 recipes in the database. | Confirmed | New |
 
 ### Example of a Good Rewrite
 
