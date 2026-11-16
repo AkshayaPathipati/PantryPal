@@ -35,21 +35,21 @@ RULES
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| REQ-UN-01 | The system shall save the recipe named "Alfredo Pasta"  when a user submits a recipe named "Alfredo Pasta".  | Suspected Bug | CR-2 (Suspected Bug): The system shall save the recipe name submitted by a user.|
-| REQ-UN-02 | The system shall save the ingredients "pasta" and "alfredo sauce" when a user submits a recipe with those ingredients. | Suspected Bug | CR-6 (Suspected Bug): The system shall save the ingredients submitted with a recipe. |
+| REQ-UN-01 | The system shall save the recipe named "Alfredo Pasta"  when a user submits a recipe named "Alfredo Pasta".  | Confirmed | CR-2 (Suspected Bug): The system shall save the recipe name submitted by a user.|
+| REQ-UN-02 | The system shall save the ingredients "pasta" and "alfredo sauce" when a user submits a recipe with those ingredients. | Confirmed | CR-6 (Suspected Bug): The system shall save the ingredients submitted with a recipe. |
 | REQ-UN-03 | The system shall save only one "Alfredo Pasta" recipe when a user double-clicks Submit Recipe. |  Suspected Bug | CR-5 (Suspected Bug): The system shall save only one recipe when the same submission is sent twice |
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| NFR-UN-01 | The "Alfredo Pasta" recipe shall appear in the recipe list within 2 seconds of submitting, with under 50 recipes in the database. | Confirmed | New |
+| NFR-UN-01 | The "Alfredo Pasta" recipe shall appear in the recipe list within 2 seconds of submitting, with under 50 recipes in the database. | Suspected Bug | New |
 
 ### Example of a Good Rewrite
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| REQ-MG-01 | The system shall reject a profile bio longer than 280 characters with the error "Bio must be 280 characters or fewer." | Suspected bug | CR-3 (Unconfirmed): The system shall limit the bio to 280 characters. |
+| REQ-MG-01 | The system shall reject a profile bio longer than 280 characters with the error "Bio must be 280 characters or fewer." | Suspected bug  | CR-3 (Unconfirmed): The system shall limit the bio to 280 characters. |
 | NFR-MG-01 | The profile page loads in under 2 seconds with 100 profiles in the database. | Confirmed | New |
 
 ---
