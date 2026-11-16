@@ -33,8 +33,8 @@ HOW TO USE THIS FILE
 3. Open GET /api/recipes in the browser and look for the new recipe. 
 
 **Expected result:** A recipe named "Alfredo Pasta" is in the list.
-**Actual result:**
-**Status:** 
+**Actual result:** A recipe named "Alfredo Pasta" was saved and appears in GET /api/recipes.
+**Status:** Pass
 **Severity:** 
 **V or V:** 
 **GitHub Issue:** 
@@ -56,8 +56,8 @@ HOW TO USE THIS FILE
 3. Find "Alfredo Pasta" and check its ingredients field.
 
 **Expected result:** The recipes ingredients are "pasta" and "alfredo sauce".
-**Actual result:**
-**Status:**
+**Actual result:** The saved "Alfredo Pasta" recipe has ingredients ["pasta", "alfredo sauce"].
+**Status:** Pass
 **Severity:**
 **V or V:**
 **GitHub Issue:**
@@ -79,11 +79,11 @@ HOW TO USE THIS FILE
 3. Open GET /api/recipes and count how many "Alfredo Pasta" recipes there are.
 
 **Expected result:** There is exactly one "Alfredo Pasta" recipe.
-**Actual result:**
-**Status:**
-**Severity:**
-**V or V:**
-**GitHub Issue:**
+**Actual result:** Two identical "Alfredo Pasta" recipes were saved from one double click.
+**Status:** Fail
+**Severity:** Major
+**V or V:** Verification
+**GitHub Issue:** #
 
 ---
 
@@ -102,10 +102,10 @@ HOW TO USE THIS FILE
 3. Search for the ingredient "pasta".
 
 **Expected result:** "Alfredo Pasta" shows up in the list within 2 seconds and appears in the search results for "pasta".
-**Actual result:**
-**Status:**
-**Severity:**
-**V or V:**
-**GitHub Issue:**
+**Actual result:** "Alfredo Pasta" took about 12 seconds to appear in the recipe list. It did appear in Recipes You Can Make after adding "pasta" in 2 seconds.
+**Status:** Fail
+**Severity:** Major
+**V or V:** Verificiation
+**GitHub Issue:** #
 
 ---
