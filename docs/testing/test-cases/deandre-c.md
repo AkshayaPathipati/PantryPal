@@ -78,7 +78,7 @@
 **Status:** Fail
 **Severity:** Minor
 **V or V:** Verification
-**GitHub Issue:** [add # after opening the issue]
+**GitHub Issue:** #133
 
 ---
 
