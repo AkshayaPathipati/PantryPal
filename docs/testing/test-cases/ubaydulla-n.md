@@ -18,7 +18,7 @@ HOW TO USE THIS FILE
 
 ---
 
-**Test ID: ** UN-01
+**Test ID:** UN-01
 **From Part 6:** New
 **Written by:** Ubaydulla N
 **Title:** Recipe name is saved after submitting the upload form
@@ -34,10 +34,10 @@ HOW TO USE THIS FILE
 
 **Expected result:** A recipe named "Alfredo Pasta" is in the list.
 **Actual result:**
-**Status:** (Pass / Fail)
-**Severity:** (Critical / Major / Minor, Fail only)
-**V or V:** (Verification / Validation, Fail only)
-**GitHub Issue:** (#number, Fail only)
+**Status:** 
+**Severity:** 
+**V or V:** 
+**GitHub Issue:** 
 
 ---
 
@@ -47,7 +47,7 @@ HOW TO USE THIS FILE
 **Title:** Ingredients are saved with the recipe
 **Traces to:** REQ-UN-02
 **Test type:** Integration
-**Preconditions:** Client and server are running locally and connected to MogoDB.
+**Preconditions:** Client and server are running locally and connected to MongoDB.
 **Test data:** Same as UN-01
 
 **Steps:**
