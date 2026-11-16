@@ -110,7 +110,7 @@ HOW TO USE THIS FILE
 **Status:** Fail
 **Severity:** Medium 
 **V or V:** Verification
-**GitHub Issue:**
+**GitHub Issue:** #136
 
 ---
 
