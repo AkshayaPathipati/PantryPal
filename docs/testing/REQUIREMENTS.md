@@ -78,27 +78,27 @@ RULES
 
 ---
 
-## Section: [Your Area] ([Your Name])
+## Section: Ingredient Search & Matching (Deandre Chandler)
 
 ### Stakeholder Goals
 
 | ID | Stakeholder | Goal |
 |---|---|---|
-| | | |
+| G-DC-01 | Home Cook | Find a recipe they can make right now with the few ingredients they have on hand, and see what, if anything, they still need to buy. |
 
 ### Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+| REQ-DC-01 | When "Your Ingredients" contains `eggs`, "Recipes You Can Make" shall list every recipe that has at least one ingredient equal to `eggs` after ignoring capitalization and leading/trailing spaces (for example `EGGS` or ` Eggs `), and shall not list any recipe with zero matching ingredients. | Confirmed | CR-3 (Confirmed): The system shall return recipes that contain at least one exact ingredient match. |
+| REQ-DC-02 | When the user adds an ingredient that is already in "Your Ingredients" (ignoring capitalization and leading/trailing spaces, for example adding `Eggs` when `eggs` is listed), the list shall still contain exactly one entry for that ingredient. | Suspected bug | New (from SYSTEM_MAP Part 4, Question 2) |
+| REQ-DC-03 | "Recipes You Can Make" shall list matching recipes in descending order of matched-ingredient count, so a recipe matching 2 of the user's ingredients appears above a recipe matching 1. | Confirmed | New |
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
+| NFR-DC-01 | After the user clicks Add (or presses Enter) on an ingredient, the "Recipes You Can Make" section shall update within 1 second, with the recipes already loaded from the server. | Confirmed | New |
 
 ---
 
