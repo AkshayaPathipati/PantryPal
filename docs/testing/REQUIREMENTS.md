@@ -54,27 +54,27 @@ RULES
 
 ---
 
-## Section: [Your Area] ([Your Name])
+## Section: Recipe Search and Recipe Media (Rory Campbell)
 
 ### Stakeholder Goals
 
 | ID | Stakeholder | Goal |
 |---|---|---|
-| | | |
+| G-RC-01 | PantryPal user | Quickly locate and recognize a recipe even when an ingredient is misspelled, while viewing any media associated with that recipe. |
 
 ### Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+| REQ-RC-01 | When a user searches for "tomato sause", PantryPal shall return recipes containing "tomato sauce". | Suspected Bug | CR-4 (Suspected Bug): The system shall return a recipe when the searched ingredient differs from a recipe ingredient by one spelling error. |
+| REQ-RC-02 | When a user attaches a valid image to a recipe, PantryPal shall save a reference to that image with the recipe. | Suspected Bug | CR-7 (Unconfirmed): The system shall store media associated with a recipe. |
+| REQ-RC-03 | When PantryPal displays a recipe that has saved media, the recipe view shall display the associated image. | Suspected Bug | CR-7 (Unconfirmed): The system shall store media associated with a recipe. |
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
+| NFR-RC-01 | PantryPal shall continue displaying the recipe’s name, ingredients, and instructions if its associated media cannot be loaded. | Confirmed | New |
 
 ---
 
