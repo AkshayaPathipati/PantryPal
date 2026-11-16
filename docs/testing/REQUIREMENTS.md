@@ -66,7 +66,7 @@ RULES
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| REQ-RC-01 | When a user searches for '"tomato sause"', PantryPal shall return recipes containing '"tomato sauce"'. | Suspected Bug | CR-4 (Suspected Bug): The system shall return a recipe when the searched ingredient differs from a recipe ingredient by one spelling error. |
+| REQ-RC-01 | When a user searches for "tomato sause", PantryPal shall return recipes containing "tomato sauce". | Suspected Bug | CR-4 (Suspected Bug): The system shall return a recipe when the searched ingredient differs from a recipe ingredient by one spelling error. |
 | REQ-RC-02 | When a user attaches a valid image to a recipe, PantryPal shall save a reference to that image with the recipe. | Suspected Bug | CR-7 (Unconfirmed): The system shall store media associated with a recipe. |
 | REQ-RC-03 | When PantryPal displays a recipe that has saved media, the recipe view shall display the associated image. | Suspected Bug | CR-7 (Unconfirmed): The system shall store media associated with a recipe. |
 
