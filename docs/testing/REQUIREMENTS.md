@@ -102,24 +102,24 @@ RULES
 
 ---
 
-## Section: [Your Area] ([Your Name])
+## Section: Server & API Configuration (Gabriel Elias)
 
 ### Stakeholder Goals
 
 | ID | Stakeholder | Goal |
 |---|---|---|
-| | | |
+| G-GE-01 | PantryPal user | Find recipes using available ingredients and upload or view recipes through the application. |
 
 ### Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+| REQ-GE-01 | The server shall return a list of saved recipes when a client sends a GET request to /api/recipes. | Confirmed | New |
+| REQ-GE-02 | The server shall create a user account and return HTTP 201 when valid registration credentials are submitted. | Confirmed | New |
+| REQ-GE-03 | The server shall authenticate a user and return a JSON Web Token when valid login credentials are submitted. | Confirmed | New |
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
+| NFR-GE-01 | The server shall respond to API requests from approved client origins without CORS errors. | Unconfirmed | CR-1 |

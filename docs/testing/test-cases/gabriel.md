@@ -1,7 +1,7 @@
-# Test Cases: [Your First Name Last Initial]
+# Test Cases: Gabriel E
 
-**Team number:** [XX]
-**My area:** [from REQUIREMENTS.md]
+**Team number:** 12
+**My area:** Server & API Configuration
 
 <!--
 HOW TO USE THIS FILE
@@ -18,94 +18,133 @@ HOW TO USE THIS FILE
 
 ---
 
-**Test ID:**
-**From Part 6:** (old test number, or New)
-**Written by:**
-**Title:**
-**Traces to:**
-**Test type:** (Unit / Integration / System / Acceptance / Boundary Value / Negative / Security)
-**Preconditions:**
-**Test data:**
+**Test ID:** GE-01
+**From Part 6:** New
+**Written by:** Gabriel E
+**Title:** Server returns saved recipes from the database
+**Traces to:** REQ-GE-01
+**Test type:** Integration 
+**Preconditions:** Backend server is running and connected to MongoDB. At least one recipe exists in the database. 
+**Test data:** An existing saved recipe named "Chicken Tacos".
 
 **Steps:**
-1.
-2.
-3.
+1. Start the backend server using `node server.js`.
+2. Send a GET request to `http://localhost:5001/api/recipes`. 
+3. Check the HTTP response and verify that the saved "Chicken Tacos" recipe appears in the returned recipes list. 
 
-**Expected result:**
-**Actual result:**
-**Status:** (Pass / Fail)
-**Severity:** (Critical / Major / Minor, Fail only)
-**V or V:** (Verification / Validation, Fail only)
-**GitHub Issue:** (#number, Fail only)
+**Expected result:** The server returns a successful HTTP 200 response. The saved "Chicken Tacos" recipe appears in the returned recipes list. 
+**Actual result:** HTTP 200 response was returned. The "Chicken Tacos" recipe appeared in the returned recipes list. 
+**Status:** Pass
+**Severity:** N/A
+**V or V:** N/A
+**GitHub Issue:** N/A
 
 ---
 
-**Test ID:**
-**From Part 6:** (old test number, or New)
-**Written by:**
-**Title:**
-**Traces to:**
-**Test type:**
-**Preconditions:**
-**Test data:**
+**Test ID:** GE-02
+**From Part 6:** New
+**Written by:** Gabriel E
+**Title:** Server registers a new account
+**Traces to:** REQ-GE-02
+**Test type:** Integration
+**Preconditions:** Backend server is running and connected to MongoDB. The test email address is not already registered. 
+**Test data:** Valid email: vvtest2026@example.com; Password: TestPassword123!
 
 **Steps:**
-1.
-2.
-3.
+1. Start the backend server using `node server.js`.
+2. Send a POST request to `http://localhost:5001/api/register` with valid email and password credentials in the JSON request body. 
+3. Check the HTTP response and verify that the account was successfully created. 
 
-**Expected result:**
-**Actual result:**
-**Status:**
-**Severity:**
-**V or V:**
+**Expected result:** The server returns HTTP 201 and a success message indicating that the user account was created. 
+**Actual result:** HTTP 201 response was returned. The success message appeared, and the new user's ID and email were included in the response. 
+**Status:** Pass
+**Severity:** N/A
+**V or V:** N/A
+**GitHub Issue:** N/A
+
+---
+
+**Test ID:** GE-03
+**From Part 6:** New
+**Written by:** Gabriel E
+**Title:** Server authenticates an existing user and returns a JSON Web Token.
+**Traces to:** REQ-GE-03
+**Test type:** Integration
+**Preconditions:** Backend server is running and connected to MongoDB. A user account with valid login credentials exists. 
+**Test data:** Valid credentials for the test account. 
+
+**Steps:**
+1. Start the backend server using `node server.js`. 
+2. Send a POST request to `http://localhost:5001/api/login` with valid email and password credentials in the JSON request body. 
+3. Check the HTTP response and verify that a JSON Web Token and user information are returned. 
+
+**Expected result:** The server returns HTTP 200 with a success message, authentication token, and user details in JSON format. 
+**Actual result:** The server returned HTTP 200 with a successful login message, JSON Web Token, and the user's information. 
+**Status:** Pass
+**Severity:** N/A
+**V or V:** N/A
+**GitHub Issue:** N/A
+
+---
+
+**Test ID:** GE-04
+**From Part 6:** CR-1
+**Written by:** Gabriel E
+**Title:** Server allows API requests from approved local development ports 
+**Traces to:** NFR-GE-01
+**Test type:** Negative
+**Preconditions:** Backend server is running and connected to MongoDB. 
+**Test data:**
+- Approved origin: `http://localhost:3000`
+- Expected approved origin: `http://localhost:3001`
+
+**Steps:**
+1. Start the backend server using `node server.js`
+2. Send a GET request to `http://localhost:5001/api/recipes` using the origin `http://localhost:3000`.
+3. Check that the response includes the  `Access-Control-Allow-Origin` header for `http:localhost:3000`. 
+4. Send another GET request to the same endpoint using the origin `http://localhost:3001`. 
+5. Check that the response includes the `Access-Control-Allow-Origin` header for `http://localhost:3001`. 
+
+**Expected result:** The server returns HTTP 200 and includes the `Access-Control-Allow-Origin` header for both approved local development origins. 
+**Actual result:** The server returned HTTP 200 and included the CORS header for `http://localhost:3000`. However, the server did not include the CORS header when the request came from `http://localhost:3001`, even though it returned HTTP 200. 
+**Status:** Fail
+**Severity:** Medium 
+**V or V:** Verification
 **GitHub Issue:**
 
 ---
 
-**Test ID:**
-**From Part 6:** (old test number, or New)
-**Written by:**
-**Title:**
-**Traces to:**
-**Test type:**
-**Preconditions:**
-**Test data:**
+**Test ID:** GE-05
+**From Part 6:** New
+**Written by:** Gabriel E
+**Title:** User can view a recipe after submitting it. 
+**Traces to:** G-GE-01
+**Test type:** Acceptance
+**Preconditions:** 
+- PantryPal client and backend are running. 
+- Backend is connected to the recipe database. 
+- User can access the Upload Recipe form and submitted recipes section. 
+**Test data:** 
+- Username: Gabriel
+- Recipe name: Garlic Butter Chicken 
+- Ingredients: chicken breast, garlic, butter
+-Instructions: Season chicken, cook in a pan with butter and garlic until fully cooked. 
 
 **Steps:**
-1.
-2.
-3.
+1. Open PantryPal in the browser. 
+2. Navigate to the Upload Recipe Page. 
+3. Enter Gabriel as the username. 
+4. Enter Garlic Butter Chicken as the recipe name. 
+5. Enter chicken breast, garlic, and butter as the ingredients. 
+6. Enter the cooking instructions. 
+7. Click Submit Recipe. 
+8. Navigate to the submitted recipes section. 
+9. Locate Garlic Butter Chicken. 
+10. Verify that the recipe appears with the submitted information. 
 
-**Expected result:**
-**Actual result:**
-**Status:**
-**Severity:**
-**V or V:**
-**GitHub Issue:**
-
----
-
-**Test ID:**
-**From Part 6:** (old test number, or New)
-**Written by:**
-**Title:**
-**Traces to:**
-**Test type:**
-**Preconditions:**
-**Test data:**
-
-**Steps:**
-1.
-2.
-3.
-
-**Expected result:**
-**Actual result:**
-**Status:**
-**Severity:**
-**V or V:**
-**GitHub Issue:**
-
----
+**Expected result:** The recipe is successfully submitted and appears in the submitted recipes section with the correct name and information. 
+**Actual result:** The Butter Chicken recipe was successfully submitted and appeared in the submitted recipes section with the correct informaton. 
+**Status:** Pass
+**Severity:** N/A
+**V or V:** N/A
+**GitHub Issue:** N/A
