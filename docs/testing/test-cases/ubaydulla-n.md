@@ -83,7 +83,7 @@ HOW TO USE THIS FILE
 **Status:** Fail
 **Severity:** Major
 **V or V:** Verification
-**GitHub Issue:** #
+**GitHub Issue:** #124
 
 ---
 
@@ -106,6 +106,6 @@ HOW TO USE THIS FILE
 **Status:** Fail
 **Severity:** Major
 **V or V:** Verificiation
-**GitHub Issue:** #
+**GitHub Issue:** #125
 
 ---
