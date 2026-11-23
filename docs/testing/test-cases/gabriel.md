@@ -148,3 +148,49 @@ HOW TO USE THIS FILE
 **Severity:** N/A
 **V or V:** N/A
 **GitHub Issue:** N/A
+
+---
+
+**Test ID:** GE-06
+**From Part 6:** New
+**Written by:** Gabriel E
+**Title:** Server rejects registration with an invalid email format. 
+**Traces to:** REQ-GE-04
+**Test type:** Negative 
+**Preconditions:** Backend server is running and connected to MongoDB. 
+**Test data:** Email: `gabrielnotanemail`; Password: `TestPassword123!`
+
+**Steps:**
+1. Start the backend server using `node server.js`.
+2. Send a POST request to `http://localhost:5001/api/register` with an invalid email and valid password in the JSON request body. 
+3. Check the HTTP response and verify that the account was not created. 
+
+**Expected result:** The server rejects the invalid email format and returns HTTP 400 Bad Request. No account is created. 
+**Actual result:** The server returned a successful response with the message "Account created." and created a user with the email `gabrielnotanemail`. 
+**Status:** Fail
+**Severity:** Medium
+**V or V:** Validation
+**GitHub Issue:** N/A
+
+---
+
+**Test ID:** GE-07
+**From Part 6:** New
+**Written by:** Gabriel E
+**Title:** Server rejects registration with an invalid email format. 
+**Traces to:** REQ-GE-04
+**Test type:** Negative 
+**Preconditions:** Backend server is running and connected to MongoDB. 
+**Test data:** Email: `gabrielnotanemail`; Password: `TestPassword123!`
+
+**Steps:**
+1. Start the backend server using `node server.js`.
+2. Send a POST request to `http://localhost:5001/api/register` with an invalid email and valid password in the JSON request body. 
+3. Check the HTTP response and verify that the account was not created. 
+
+**Expected result:** The server rejects the invalid email format and returns HTTP 400 Bad Request. No account is created. 
+**Actual result:** The server returned a successful response with the message "Account created." and created a user with the email `gabrielnotanemail`. 
+**Status:** Fail
+**Severity:** Medium
+**V or V:** Validation
+**GitHub Issue:** N/A
