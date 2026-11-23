@@ -47,6 +47,41 @@ function App() {
             });
     };
 
+    const deleteRecipe = async (recipe) => {
+        const confirmed = window.confirm(
+            `Are you sure you want to delete ${recipe.recipeName}?`
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                `https://pantrypal-sbeo.onrender.com/api/recipes/${recipe._id}`,
+                {
+                    method: "DELETE",
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Failed to delete recipe.");
+            }
+
+            fetchRecipes();
+        } catch (error) {
+            console.error("Error deleting recipe:", error);
+
+            setError(
+                error instanceof Error
+                    ? error.message
+                    : "Failed to delete recipe."
+            );
+        }
+    };
+
     // Loads recipes when the app first opens.
     useEffect(() => {
         fetchRecipes();
@@ -156,6 +191,13 @@ function App() {
 
                             <h4>Instructions:</h4>
                             <p>{recipe.instructions}</p>
+
+                            <button
+                                type="button"
+                                onClick={() => deleteRecipe(recipe)}
+                            >
+                                Delete Recipe
+                            </button>
 
                             {/* Displays an image if one is available. */}
                             {recipe.image && (
