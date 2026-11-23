@@ -27,14 +27,26 @@ function Upload({ onRecipeSubmitted, }: { onRecipeSubmitted: () => void; }) {
         }
     };
 
-    // Adds an ingredient to the recipe.
+   // FIX #147: skip ingredients already in the list (ignores capitalization).
     const addIngredient = () => {
         const newIngredient = ingredient.trim();
 
-        if (newIngredient !== "") {
-            setIngredients([...ingredients, newIngredient]);
-            setIngredient("");
+        if (newIngredient === "") {
+            return;
         }
+
+        const alreadyAdded = ingredients.some(
+            (item) => item.toLowerCase() === newIngredient.toLowerCase()
+        );
+
+        if (alreadyAdded) {
+            alert(`"${newIngredient}" is already in the list.`);
+            setIngredient("");
+            return;
+        }
+
+        setIngredients([...ingredients, newIngredient]);
+        setIngredient("");
     };
 
     // Allows Enter to add an ingredient without submitting the form.
