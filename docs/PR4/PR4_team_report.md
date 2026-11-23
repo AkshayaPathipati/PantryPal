@@ -89,45 +89,44 @@ Backend integration testing was not completed because the team did not have the 
 
 ## 4. Feature Decision
 
-**Chosen feature:** Recipe deletion
+**Chosen feature:** Recipe image uploading and display
 
 **Feature Issue:** [Issue #145](https://github.com/AkshayaPathipati/PantryPal/issues/145)
 
 ### User Story
 
-As a PantryPal user, I want to delete a submitted recipe, so that I can remove recipes that are outdated or were added by mistake.
+As a PantryPal user, I want to upload an image with my recipe, so that I can identify and preview recipes visually.
 
 ### Why We Chose This Feature
 
-The team chose recipe deletion because users could submit and view recipes but had no way to remove them. This was identified as a missing feature during testing. It also improves basic recipe management and can be verified with frontend and backend tests.
+The team chose recipe image uploading because it was identified as a missing feature during Sprint 4 testing. The current application supports recipe names, ingredients, and instructions, but it does not allow users to attach images to recipes. This feature was also included in the inherited project requirements and would make browsing submitted recipes easier in the next sprint.
 
 ### Ownership
 
-- **Frontend:** Rory Campbell
+- **Frontend:** Deandre Chandler
 - **Backend/database:** Rory Campbell
-- **Testing:** Team
-- **Documentation:** Team
+- **Testing:** Gabe Elias
+- **Documentation:** Ubaydulla Noorulla
 - **Code review:** Team
 
 ### Acceptance Test Cases
 
-1. **Delete a recipe after confirmation**
+1. **Upload a valid recipe image**
 
-   - Load or submit a recipe named `Limeade`.
-   - Show the submitted recipes.
-   - Click the `Delete Recipe` button.
-   - Confirm the deletion.
-   - Verify that a DELETE request is sent for the selected recipe.
-   - Verify that the recipe no longer appears after the recipe list refreshes.
+   - Open the recipe submission form.
+   - Enter a username, recipe name, ingredients, and instructions.
+   - Select a valid image file.
+   - Submit the recipe.
+   - Verify that the recipe saves successfully with an image reference.
+   - Verify that the uploaded image appears on the submitted recipe card.
 
-2. **Canceling deletion keeps the recipe**
+2. **Reject an invalid image file**
 
-   - Load or submit a recipe named `Limeade`.
-   - Show the submitted recipes.
-   - Click the `Delete Recipe` button.
-   - Cancel the confirmation dialog.
-   - Verify that no DELETE request is sent.
-   - Verify that the recipe remains visible.
+   - Open the recipe submission form.
+   - Select a non-image file or an image larger than the allowed size.
+   - Submit the recipe.
+   - Verify that the application displays a clear error message.
+   - Verify that the recipe is not saved with an invalid image reference.
 
 ---
 
