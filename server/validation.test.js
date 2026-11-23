@@ -1,7 +1,22 @@
 const request = require("supertest");
-const { app } = require("../server");
+const { app } = require("./server");
+const User = require("./User");
 
 describe("Bug Fix Tests", () => {
+
+    beforeEach(() => {
+        jest.spyOn(User, "findOne").mockResolvedValue(null);
+
+        jest.spyOn(User, "create").mockResolvedValue({
+            _id: "mock-user-id",
+            email: "notanemail2026xyz"
+        });
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
+    })
+
     test("GE-06: Reject invalid email registration", async () => {
         const response = await request(app)
             .post("/api/register")
