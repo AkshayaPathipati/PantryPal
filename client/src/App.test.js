@@ -1,8 +1,27 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen, waitFor } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+beforeEach(() => {
+    global.fetch = jest.fn(() =>
+        Promise.resolve({
+            ok: true,
+            json: () => Promise.resolve({ recipes: [] }),
+        })
+    );
+});
+
+afterEach(() => {
+    jest.restoreAllMocks();
+});
+
+test("renders the PantryPal heading", async () => {
+    render(<App />);
+
+    expect(
+        screen.getByRole("heading", { name: "PantryPal" })
+    ).toBeTruthy();
+
+    await waitFor(() => {
+        expect(global.fetch).toHaveBeenCalledTimes(1);
+    });
 });

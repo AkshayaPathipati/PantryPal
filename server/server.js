@@ -27,9 +27,10 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.json({
-    message: "You found the PantryPal backend. Enjoy your stay."
+    message: "You found the PantryPal backend. Enjoy your stay.",
+    deploymentTest: "Rory PR4 Test"
   });
-})
+});
 
 //basically backedn api
 /*

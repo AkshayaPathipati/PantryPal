@@ -61,3 +61,21 @@ describe("Search tags", () => {
     ]);
   });
 });
+
+test("matches a recipe when the search has one spelling error", () => {
+  const search = new Search();
+  search.setTagList(["tomato sause"]);
+
+  const recipe = new Recipe(
+    "user1",
+    "Tomato Sauce",
+    ["tomato sauce"],
+    "Cook the sauce"
+  );
+
+  const results = search.getResults([recipe]);
+
+  expect(results.map((recipe) => recipe.recipeName)).toEqual([
+    "Tomato Sauce",
+  ]);
+});
