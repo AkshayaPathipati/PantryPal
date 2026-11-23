@@ -2,7 +2,7 @@
 
 **Team Number:** 12
 
-**Team Members:** Rory Campbell, Gabe Elias, Deandre Chandler
+**Team Members:** Rory Campbell, Gabe Elias, Deandre Chandler, Ubaydulla Noorulla
 
 ---
 
