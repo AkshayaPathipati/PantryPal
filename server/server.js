@@ -191,6 +191,14 @@ app.get("/api/recipes", async (req, res) => {
 app.post("/api/recipes", async (req, res) => {
   try {
     const { username, recipeName } = req.body;
+
+     // Reject empty or whitespace-only recipe names
+    if(typeof recipeName !== "string" || !recipeName.trim()) {
+        return res.status(400).json({
+            message: "Recipe name cannot be empty."
+        })
+    }
+
     const recipe = await Recipe.create({
       username,
       recipeName,
