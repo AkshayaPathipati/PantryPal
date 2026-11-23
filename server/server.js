@@ -57,6 +57,17 @@ app.post("/api/register", async (req, res) => {
         message: "Invalid email or password. Password must be at 8-72 characters long.",
       });
     }
+
+    // Check email format
+     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+     // Reject email addresses that do not match the expected format
+     if(!emailRegex.test(email.trim())) {
+        return res.status(400).json({
+            message: "Invalid email format.",
+        })
+    }
+
     const normalizedEmail = email.trim().toLowerCase();
 
     //check is email already registered
@@ -244,4 +255,8 @@ async function startServer() {
   }
 }
 
-startServer();
+if(require.main === module) {
+    startServer();
+}
+
+module.exports = {app, Recipe, startServer};
