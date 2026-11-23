@@ -118,7 +118,7 @@ RULES
 | REQ-GE-02 | The server shall create a user account and return HTTP 201 when valid registration credentials are submitted. | Confirmed | New |
 | REQ-GE-03 | The server shall authenticate a user and return a JSON Web Token when valid login credentials are submitted. | Confirmed | New |
 | REQ-GE-04 | The server shall reject registration attempts containing improperly formatted email addresses. | Unconfirmed | New |
-| REQ-GE-05 | The server shall reject recipe submissions with an empty or whitespace-only recipe name and return HTTP 400 Bad Request. | Unconfirmed | New |
+| REQ-GE-05 | The server shall reject recipe submissions with a whitespace-only recipe name and return HTTP 400 Bad Request. | Unconfirmed | New |
 
 ### Non-Functional Requirements
 
