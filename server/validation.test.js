@@ -15,7 +15,7 @@ describe("Bug Fix Tests", () => {
 
     afterEach(() => {
         jest.restoreAllMocks();
-    })
+    });
 
     test("GE-06: Reject invalid email registration", async () => {
         const response = await request(app)
@@ -28,4 +28,16 @@ describe("Bug Fix Tests", () => {
         expect(response.status).toBe(400);
         expect(response.body.message).toBe("Invalid email format.");
     });
-})
+
+    test("GE-07: Reject whitespace-only recipe name", async() => {
+        const response = await request(app)
+            .post("/api/recipes")
+            .send({
+                username: "Gabriel",
+                recipeName: "   "
+            });
+
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe("Recipe name cannot be empty.");
+    });
+});
