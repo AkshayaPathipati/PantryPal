@@ -43,6 +43,40 @@ class Search {
         return this.tagList;
     }
 
+    static isCloseSpelling(first, second) {
+        if (!/^[a-z ]+$/.test(first) || !/^[a-z ]+$/.test(second)) {
+            return false;
+        }
+
+        if (Math.abs(first.length - second.length) > 1) {
+            return false;
+        }
+
+        let previousRow = Array.from(
+            { length: second.length + 1 },
+            (_, index) => index
+        );
+
+        for (let i = 1; i <= first.length; i++) {
+            const currentRow = [i];
+
+            for (let j = 1; j <= second.length; j++) {
+                const replacementCost =
+                    first[i - 1] === second[j - 1] ? 0 : 1;
+
+                currentRow[j] = Math.min(
+                    currentRow[j - 1] + 1,
+                    previousRow[j] + 1,
+                    previousRow[j - 1] + replacementCost
+                );
+            }
+
+            previousRow = currentRow;
+        }
+
+        return previousRow[second.length] === 1;
+    }
+
     getResults(recipes) {
     // Store the active ingredient names.
         const activeTags = [];
@@ -86,7 +120,10 @@ class Search {
 
                 // Check if the user has this ingredient.
                 for (let k = 0; k < activeTags.length; k++) {
-                    if (ingredients[j] === activeTags[k]) {
+                    if (
+                        ingredients[j] === activeTags[k] ||
+                        Search.isCloseSpelling(ingredients[j], activeTags[k])
+                    ) {
                         found = true;
                     }
                 }
