@@ -148,3 +148,57 @@ HOW TO USE THIS FILE
 **Severity:** N/A
 **V or V:** N/A
 **GitHub Issue:** N/A
+
+---
+
+**Test ID:** GE-06
+**From Part 6:** New
+**Written by:** Gabriel E
+**Title:** Server rejects registration with an invalid email format. 
+**Traces to:** REQ-GE-04
+**Test type:** Negative 
+
+**Preconditions:** 
+1. Backend server is running using `node server.js`.
+2. Backend is connected to MongoDB.
+
+**Test data:** Email: `gabrielnotanemail`; Password: `TestPassword123!`
+
+**Steps:**
+1. Start the backend server using `node server.js`.
+2. Send a POST request to `http://localhost:5001/api/register` with an invalid email and valid password in the JSON request body. 
+3. Check the HTTP response and verify that the account was not created. 
+
+**Expected result:** The server rejects the invalid email format and returns HTTP 400 Bad Request. No account is created. 
+**Actual result:** The server returned a successful response with the message "Account created." and created a user with the email `gabrielnotanemail`. 
+**Status:** Fail
+**Severity:** Medium
+**V or V:** Validation
+**GitHub Issue:** #139
+
+---
+
+**Test ID:** GE-07
+**From Part 6:** New
+**Written by:** Gabriel E
+**Title:** Recipe name contains only whitespace.
+**Traces to:** REQ-GE-05
+**Test type:** Boundary
+
+**Preconditions:**
+1. Backend server is running using `node server.js`.
+2. Backend is connected to MongoDB.
+
+**Test data:** Username: `gabriel`; Recipe Name: `"   "` (three spaces)
+
+**Steps:**
+1. Start the backend server using `node server.js`.
+2. Send a POST request to `http://localhost:5001/api/recipes` with a username and a recipe name containing only three spaces. 
+3. Check the HTTP response and verify that the recipe is rejected.  
+
+**Expected result:** The API should reject a recipe name containing only spaces and return HTTP 400 Bad Request. The recipe should not be saved. 
+**Actual result:** The API returned an HTTP 500 Internal Server Error with the message "Recipe NOT saved successfully :(". The recipe was not saved. 
+**Status:** Fail
+**Severity:** Medium
+**V or V:** Validation
+**GitHub Issue:** #140 
