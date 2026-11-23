@@ -10,8 +10,8 @@
 
 ## Fix 1: Recipe Spelling Off by One Character
 
-- **Issue:** [Issue #128]([https://github.com/AkshayaPathipati/PantryPal/issues/128](https://github.com/AkshayaPathipati/PantryPal/issues/128#issue-6413117089))
-- **Pull Request:**
+- **Issue:** [Issue #128](https://github.com/AkshayaPathipati/PantryPal/issues/128#issue-6413117089)
+- **Pull Request:** https://github.com/AkshayaPathipati/PantryPal/pull/144
 - **Before screenshot:** `screenshots/rory_campbell_issue128_before.png`
 - **After screenshot:** `screenshots/rory_campbell_issue128_after.png`
 - **Classification:** Code bug
@@ -36,8 +36,8 @@ The search logic was updated to allow a recipe ingredient to match when the sear
 
 ## Fix 2: Recipe Deletion
 
-- **Issue:** [[[Issue #145](https://github.com/AkshayaPathipati/PantryPal/issues/145)](https://github.com/AkshayaPathipati/PantryPal/issues/145)](https://github.com/AkshayaPathipati/PantryPal/issues/128)
-- **Pull Request:**
+- **Issue:** [Issue #145](https://github.com/AkshayaPathipati/PantryPal/issues/145)
+- **Pull Request:** https://github.com/AkshayaPathipati/PantryPal/pull/152
 - **Before screenshot:** `screenshots/rory_campbell_issue145_before.png`
 - **After screenshot:** `screenshots/rory_campbell_issue145_after.png`
 - **Classification:** Missing feature
