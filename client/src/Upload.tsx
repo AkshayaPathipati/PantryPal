@@ -12,6 +12,10 @@ function Upload({ onRecipeSubmitted, }: { onRecipeSubmitted: () => void; }) {
     // Stores the ingredients added to this recipe.
     const [ingredients, setIngredients] = React.useState<string[]>([]);
 
+    // FIX #124: tracks whether a submission is in progress so double-clicks only send one request.
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
+    const submittingRef = React.useRef(false);
+
     // Updates the matching form field when the user types.
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -71,6 +75,13 @@ function Upload({ onRecipeSubmitted, }: { onRecipeSubmitted: () => void; }) {
             alert("Please add at least one ingredient.");
             return;
         }
+        
+        // FIX #124: ignore extra clicks while a request is already sending.
+        if (submittingRef.current) {
+            return;
+        }
+        submittingRef.current = true;
+        setIsSubmitting(true);
 
         try {
             const recipe = new Recipe(
@@ -114,8 +125,12 @@ function Upload({ onRecipeSubmitted, }: { onRecipeSubmitted: () => void; }) {
                     : "An unexpected error occurred.";
 
             alert("Failed to submit recipe: " + message);
+        } finally {
+            // FIX #124: unlock the form once the request finishes.
+            submittingRef.current = false;
+            setIsSubmitting(false);
         }
-    };
+    }; 
 
     return (
         <form onSubmit={handleSubmit}>
@@ -199,9 +214,13 @@ function Upload({ onRecipeSubmitted, }: { onRecipeSubmitted: () => void; }) {
 
                 <br />
 
-                {/* Submits the completed recipe. */}
-                <button type="submit" className="btn btn-primary">
-                    Submit Recipe :D
+                {/* Submits the completed recipe. FIX #124: disabled while sending. */}
+                <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={isSubmitting}
+                >
+                    {isSubmitting ? "Submitting..." : "Submit Recipe :D"}
                 </button>
             </div>
         </form>
