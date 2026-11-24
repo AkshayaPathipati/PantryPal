@@ -30,9 +30,9 @@ The server accepted registration containing an invalid email format instead of r
 
 The registration code was fixed to check whether the email format is valid before creating an account. Invalid emails are now rejected with a HTTP 400 Bad Request error instead of being accepted by the server. 
 
-![Before spelling search test](screenshots/gabriel_elias_issue139_before.png)
+![Before invalid email registration test](screenshots/gabriel_elias_issue139_before.png)
 
-![After spelling search test](screenshots/gabriel_elias_issue139_after.png)
+![After invalid email registration test](screenshots/gabriel_elias_issue139_after.png)
 
 ---
 
@@ -60,9 +60,9 @@ This was classified as a code bug because the test correctly expected the server
 
 The recipe validation was fixed to check whether the name contains actual text before saving it. Recipe names containing only spaces are now rejected with a HTTP 400 Bad Request error instead of causing a server error. 
 
-![Before recipe deletion test](screenshots/gabriel_elias_issue140_before.png)
+![Whitespace-only recipe name returns HTTP 500](screenshots/gabriel_elias_issue140_before.png)
 
-![After recipe deletion test](screenshots/gabriel_elias_issue140_after.png)
+![Whitespace-only recipe name rejected with HTTP 400](screenshots/gabriel_elias_issue140_after.png)
 
 ---
 
