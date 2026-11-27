@@ -57,6 +57,17 @@ app.post("/api/register", async (req, res) => {
         message: "Invalid email or password. Password must be at 8-72 characters long.",
       });
     }
+
+    // Check email format
+     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+     // Reject email addresses that do not match the expected format
+     if(!emailRegex.test(email.trim())) {
+        return res.status(400).json({
+            message: "Invalid email format.",
+        })
+    }
+
     const normalizedEmail = email.trim().toLowerCase();
 
     //check is email already registered
@@ -180,6 +191,14 @@ app.get("/api/recipes", async (req, res) => {
 app.post("/api/recipes", async (req, res) => {
   try {
     const { username, recipeName } = req.body;
+
+     // Reject empty or whitespace-only recipe names
+    if(typeof recipeName !== "string" || !recipeName.trim()) {
+        return res.status(400).json({
+            message: "Recipe name cannot be empty."
+        })
+    }
+
     const recipe = await Recipe.create({
       username,
       recipeName,
@@ -244,4 +263,8 @@ async function startServer() {
   }
 }
 
-startServer();
+if(require.main === module) {
+    startServer();
+}
+
+module.exports = {app, Recipe, startServer};
